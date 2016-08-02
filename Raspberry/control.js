@@ -8,37 +8,46 @@ var socket = io.connect('http://192.168.1.4:3000?token=' + token, {reconnect: tr
 
 
 //define the routes from the external file
-function sendMessage(socket, activityType, nodeChanel){
-	var message = activityType*100 + 1*10 + nodeChanel;
+function sendMessage(socket, type, nodeChanel){
+	var message = type*100 + 1*10 + nodeChanel;
 	exec.execFile('./remote',
 		[message],
 		function (error, stdout, stderr) {
 			console.log('stdout: ' + stdout);
 			if( stdout.indexOf("Got this response") > -1 ){
-				activityType = activityType == 1 ? 0 : 1;
+				type = type == 1 ? 0 : 1;
 
 				var state = stdout.split('Got this response ')[1].split('.')[0];
-				socket.emit('2', state);
+				socket.emit('updateNode', state);
+           			if(i!=0){
+					var message_2 = activityType*100 + 10 + vanSub;
+					socket.emit('updateNode', message_2);
+				}
+				if(i==howManyTimes){
+					sendMessage(socket, activityType, 0)
+				}
 			}
 			if (error !== null) {
 				console.log('exec error: ' + error);
-				socket.emit('2', 'error');
+				socket.emit('updateNode', 'error');
 			}
 		});
 }
 
-var activityTyp;
+var activityType;
 
 var pumpChanel;
 var vanArray;
+var vanSub;
 
 var i, howManyTimes, time;
-
+var newControl = 0;
 socket.on('chat', function (data) {
 	pumpChanel = data.pump[0].chanel;
 	activityType = data.activityType;
 	vanArray = data.van;
 	howManyTimes = vanArray.length;
+	newControl == 1;
 	i = 0;
 	console.log(data);
 	f(); 
@@ -46,10 +55,15 @@ socket.on('chat', function (data) {
 
 
 function f() {
+	newControl = 0;
 	sendMessage(socket, activityType, vanArray[i].chanel);
 	time = vanArray[i].estimatedTime;
+	if(i!=0){
+		vanSub = vanArray[i-1].chanel;
+	}
 	i++;
-	if( i < howManyTimes ){
+	
+	if( i < howManyTimes && newControl == 0){
 		setTimeout( f, time * 1000 );
 	}
 }
