@@ -15,8 +15,8 @@ const uint64_t pipes[2] = { 0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL };
 //const uint8_t pipes[][6] = {"1Node","2Node"};
 
 // hack to avoid SEG FAULT, issue #46 on RF24 github https://github.com/TMRh20/RF24.git
-int message[6];
-int got_message[6];
+int message;
+int got_message;
 
 void setup(void){
 	//Prepare the radio module
@@ -39,7 +39,7 @@ bool sendMessage(){
 	//Returns true if ACK package is received
 	//Stop listening
 	radio.stopListening();
-	printf("Now sending  %d...", message[2]);
+	printf("Now sending  %d...", message);
 
 	//Send the message
 	bool ok = radio.write( &message, sizeof(message) );
@@ -67,22 +67,21 @@ bool sendMessage(){
 	}else{
 		//If we received the message in time, let's read it and print it
 		radio.read( &got_message, sizeof(got_message) );
-		printf("Yay! Got this response %d.\n\r",got_message[2]);
+		printf("Yay! Got this response %d.\n\r",got_message);
 		return true;
 	}
 }  
 
 int main( int argc, char ** argv){
-	message[0] = atoi(argv[1]);
-	message[1] = atoi(argv[2]);
-	message[2] = atoi(argv[3]);
+	message = atoi(argv[1]);
+
 	setup();
 	bool switched = false;
 	int counter = 0;
 
 	//Define the options
 
-	while(counter < 5){
+	
 
 		printf("\n Talking with my NRF24l01+ friends out there....\n");
 
@@ -94,6 +93,10 @@ int main( int argc, char ** argv){
 
 			delay(1000);
 		}
-		
-	}
+		if (counter < 5) {
+		return 0;
+		} else {
+		return 2;
+		}
+	
 }

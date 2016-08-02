@@ -8,9 +8,10 @@ var socket = io.connect('http://192.168.1.4:3000?token=' + token, {reconnect: tr
 
 
 //define the routes from the external file
-function sendMessage(socket, activityType, antenChanel, nodeChanel){
-	exec.execFile('./remote.exe',
-		[activityType, antenChanel, nodeChanel],
+function sendMessage(socket, activityType, nodeChanel){
+	var message = activityType*100 + 1*10 + nodeChanel;
+	exec.execFile('./remote',
+		[message],
 		function (error, stdout, stderr) {
 			console.log('stdout: ' + stdout);
 			if( stdout.indexOf("Got this response") > -1 ){
@@ -28,8 +29,6 @@ function sendMessage(socket, activityType, antenChanel, nodeChanel){
 
 var activityTyp;
 
-var antenChanel;
-
 var pumpChanel;
 var vanArray;
 
@@ -37,7 +36,6 @@ var i, howManyTimes, time;
 
 socket.on('chat', function (data) {
 	pumpChanel = data.pump[0].chanel;
-	antenChanel = data.anten[0].chanel;
 	activityType = data.activityType;
 	vanArray = data.van;
 	howManyTimes = vanArray.length;
@@ -48,7 +46,7 @@ socket.on('chat', function (data) {
 
 
 function f() {
-	sendMessage(socket, activityType, antenChanel, vanArray[i].chanel);
+	sendMessage(socket, activityType, vanArray[i].chanel);
 	time = vanArray[i].estimatedTime;
 	i++;
 	if( i < howManyTimes ){
