@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <RF24/RF24.h>
+#include <String.h>
 
 using namespace std;
 //RF24 radio("/dev/spidev0.0",8000000 , 25);  
@@ -17,7 +18,8 @@ const uint64_t pipes[2] = { 0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL };
 // hack to avoid SEG FAULT, issue #46 on RF24 github https://github.com/TMRh20/RF24.git
 int message;
 int got_message;
-
+char charMessage[35] = "800100-06040005-0166026603660666"; 
+char charMessage1[35] = "800100-06040005-0066046605660666"; 
 void setup(void){
 	//Prepare the radio module
 	printf("\nPreparing interface\n");
@@ -34,7 +36,7 @@ void setup(void){
 
 }
 
-bool sendMessage(){
+bool sendMessage(char message[]){
 	//This function send a message, the 'action', to the arduino and wait for answer
 	//Returns true if ACK package is received
 	//Stop listening
@@ -87,11 +89,11 @@ int main( int argc, char ** argv){
 
 		while(switched == false && counter < 5){
 
-			switched = sendMessage();
+			switched = sendMessage(charMessage);
 			
 			counter ++;
 
-			delay(1000);
+			delay(3000);
 		}
 		if (counter < 5) {
 		return 0;
