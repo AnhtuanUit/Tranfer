@@ -8,7 +8,7 @@ var socket = io.connect('http://192.168.1.19:3000?token=' + token, {reconnect: t
 
 var ackTuoi = -2, ackDoAm = -2;
 
-var message = "800101-06040005-0366026605660666";
+var message = "800100-06040005-0366026605660666";
 /*String header = "80" + nodeIp + ack;
 String detailData = "-0" + nVan + type + time;
 String data = "-" + crtOne + crtTwo + crtThree + crtFour;*/
