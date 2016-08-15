@@ -37,7 +37,8 @@ console.log("Run client!!!");
 
 //define the routes from the external file
 function sendMessage(socket, data){
-	var nodeIp =  parseInt(data.substring(2, 4));
+	var nodeIpChar =  data.substring(2, 4);
+	var nodeIp = parseInt(nodeIpChar);
 	var ack = parseInt(data.substring(4, 6));
 	var crtData = data.substring(7);
 	exec.execFile('./remote', [data]
@@ -46,7 +47,7 @@ function sendMessage(socket, data){
 			if( stdout.indexOf("Got this response") > -1 ){
 				var state = stdout.split('Got this response ')[1].split('.')[0];
 				socket.emit('updateNode', state);
-				checkSum(state, socket, crtData);
+				checkSum(socket, state, nodeIpChar, crtData);
 				console.log("-------------////--------------");
 			} else if (error !== null) {
 				if(ack == 0){
@@ -63,11 +64,12 @@ function sendMessage(socket, data){
 
 
 
-function checkSum(state, socket, crtData) {
+function checkSum(socket, state, nodeIpChar, crtData) {
 	var startIp = parseInt(state.substring(0, 2));
 	var endIp = parseInt(state.substring(2, 4));
+	var ackChar = state.substring(4, 6);
 	var ack = parseInt(state.substring(4, 6));
-
+	var header = "80";
 	if(startIp == 81 && endIp == 80){
 		if(ack == 0){
 			console.log("Feedback from anten: who you are?");
@@ -75,12 +77,15 @@ function checkSum(state, socket, crtData) {
 		if(ack > 0 && ack < 10){
 			console.log("Hands shake 1 from anten");
 			ackTuoi = ack + 1;
-			sendMessage(socket, state + "-" + crtData);
+
+			header += nodeIpChar + ackChar;
+			sendMessage(socket, header + "-" + crtData);
 		}
 		if(ack > 50 && ack < 60){
 			console.log("Hands shake 51 from anten");
 			ackDoAm = ack + 1;
-			sendMessage(socket, state +  "-" + crtData);
+			header += nodeIpChar + ackChar;
+			sendMessage(socket, header +  "-" + crtData);
 		}
 	} 
 
