@@ -71,7 +71,7 @@ socket.on('chat', function (zzz) {
 
 function f() {
 	var header = "80";
-	var detailData = "-" + controlArray[i].nVan + activityType + "00" + controlArray[i].estimatedTime.toString();
+	var detailData = "-";
 	
 
 	var obj = controlArray[i].node;
@@ -79,6 +79,7 @@ function f() {
 	for (var prop in obj) {
 		//console.log("obj." + prop + " = " + obj[prop]);
 		header+= obj[prop].nodeIp + "00";
+		detailData+= cobj[prop].nVan + activityType + "00" + controlArray[i].estimatedTime.toString();
 		var data = "-" + obj[prop].crtData;
 		while((16 - data.length) >= 0){
 			data += "0";
