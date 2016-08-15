@@ -1,6 +1,6 @@
 
 exec = require('child_process');
-
+async = require('async');
 //socket client.js
 var io = require('socket.io-client');
 var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NzllOWJhMzcxNzgxMWUwMjA3NTI1OGIiLCJ1c2VybmFtZSI6InR1YW4iLCJhdmF0YXIiOiJmZW1hbGUucG5nIiwiaWF0IjoxNDcwMDEzMDU0fQ.wb5Vv6pJc9HVF_YKkZLYHi0zT3EebAMIQz0apobDQq0';
@@ -70,22 +70,21 @@ socket.on('chat', function (zzz) {
 
 
 function f() {
-
 	var obj = controlArray[i].node;
-
-	for (var prop in obj) {
-		
-		var header = "80" + obj[prop].nodeIp + "00";
-		var detailData = "-" + obj[prop].nVan + "04" + "00" + controlArray[i].estimatedTime.toString();
-		var data = "-" + obj[prop].crtData;
-		while((16 - data.length) >= 0){
-			data += "0";
+	async.series([
+		function(callback){ 
+			if(obj.length > 0){
+				sendNode(obj, 0);
+			}
+			return callback(null);
+		},
+		function(callback){
+			if(obj.length > 1){
+				sendNode(obj, 1);
+			}
+			return callback(null);
 		}
-		message = header + detailData + data;
-		console.log(message);
-		sendMessage(socket, message);
-	}
-
+		]);
 	
 	time = controlArray[i].estimatedTime;
 	i++;
@@ -94,6 +93,17 @@ function f() {
 	}
 }
 
+function sendNode(obj, prop) {
+	var header = "80" + obj[prop].nodeIp + "00";
+	var detailData = "-" + obj[prop].nVan + "04" + "00" + controlArray[i].estimatedTime.toString();
+	var data = "-" + obj[prop].crtData;
+	while((16 - data.length) >= 0){
+		data += "0";
+	}
+	message = header + detailData + data;
+	console.log(message);
+	sendMessage(socket, message);
+}
 
 //just some output to know everything is working
 console.log("Run client!!!");
