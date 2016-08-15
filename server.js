@@ -16,7 +16,7 @@ String data = "-" + crtOne + crtTwo + crtThree + crtFour;*/
 var i, howManyTimes, time;
 var newControl = 0;
 socket.on('chat', function (data) {
-	console.log("------------Start------------");
+	console.log("-------------Start-------------");
 	f();
 });
 
@@ -46,7 +46,7 @@ function sendMessage(socket, data){
 				var state = stdout.split('Got this response ')[1].split('.')[0];
 				socket.emit('updateNode', state);
 				checkSum(state);
-				console.log("--------------////--------------");
+				console.log("-------------////--------------");
 			} else if (!error) {
 				if(ack == 0){
 					console.log('error Anten');
