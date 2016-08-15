@@ -57,7 +57,7 @@ function sendMessage(socket, data){
 				}
 				
 			} else {
-				console.log('error exec file!');
+				console.log('error exec:' + error);
 			}
 		});
 }
