@@ -44,7 +44,7 @@ function sendMessage(socket, data){
 			if( stdout.indexOf("Got this response") > -1 ){
 				var state = stdout.split('Got this response ')[1].split('.')[0];
 				socket.emit('updateNode', state);
-				checkSum(data);
+				checkSum(state);
 			}
 			if (error !== null) {
 				console.log('error: ' + nodeIp);
