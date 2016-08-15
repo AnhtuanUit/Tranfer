@@ -8,22 +8,88 @@ var socket = io.connect('http://192.168.1.19:3000?token=' + token, {reconnect: t
 
 var ackTuoi = -2, ackDoAm = -2;
 
-var message = "800100-06040005-0366026605660666";
-/*String header = "80" + nodeIp + ack;
-String detailData = "-0" + nVan + type + time;
-String data = "-" + crtOne + crtTwo + crtThree + crtFour;*/
+var message ;//= "800100-06040005-0366026605660666";
+
+
+var testDataSocket =
+{ control:
+	[ 
+	{ 
+		estimatedTime: 10, 
+		node: [
+		{
+			nodeIp: "01",
+			crtData: "01000200",
+			nVan: "06"
+		}
+		] 
+	},
+	{ 
+		estimatedTime: 10, 
+		node: [
+		{
+			nodeIp: "01",
+			crtData: "03000400",
+			nVan: "06"
+		}
+		] 
+	},
+	{ 
+		estimatedTime: 10, 
+		node: [
+		{
+			nodeIp: "01",
+			crtData: "0500",
+			nVan: "06"
+		},
+		{
+			nodeIp: "01",
+			crtData: "0600",
+			nVan: "06"
+		}
+		] 
+	}
+	],
+	activityType: "01"
+};
+
+
+var activityType;
+var controlArray;
 
 var i, howManyTimes, time;
-var newControl = 0;
-socket.on('chat', function (data) {
+socket.on('chat', function (zzz) {
+	var data = testDataSocket;
+	activityType = data.activityType;
+	controlArray = data.control;
+	howManyTimes = controlArray.length;
+	i = 0;
 	console.log("-------------Start-------------");
 	f();
 });
 
 
 function f() {
-	sendMessage(socket, message);
-	time = 5;
+	var header = "80";
+	var detailData = "-" + controlArray[i].nVan + activityType + "00" + controlArray[i].estimatedTime.toString();
+	var data = "-";
+
+	var obj = controlArray[i].node;
+
+	for (var prop in obj) {
+		console.log("obj." + prop + " = " + obj[prop]);
+		header+= obj[prop].nodeIp + "00";
+		data +=  obj[prop].crtData;
+		while((16 - obj[prop].crtData.length) >0){
+			data += "0";
+		}
+		console.log(data);
+		message = header + detailData + data;
+		sendMessage(socket, message);
+	}
+
+	
+	time = controlArray[i].estimatedTime;
 	i++;
 	if( i < howManyTimes){
 		setTimeout( f, time * 1000 );
@@ -91,6 +157,13 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 	} 
 
 	if((startIp > 0 && startIp < 80) && endIp == 80){
-		console.log("Data from van" + startIp);
+		
+		if(ack == ackTuoi + 1){
+			console.log("Data from van" + startIp);
+			var ackChar = ack > 9 ? ack.toString() : "0" + ack.toString();
+			socket.emit('updateNode', "0" + startIp + ackChar);
+		} else {
+			console.log("Van: who you are?");
+		}
 	} 
 }
