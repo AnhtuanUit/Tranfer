@@ -16,7 +16,7 @@ const uint64_t pipes[2] = { 0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL };
 //const uint8_t pipes[][6] = {"1Node","2Node"};
 
 // hack to avoid SEG FAULT, issue #46 on RF24 github https://github.com/TMRh20/RF24.git
-int message;
+char message[35];
 int got_message;
 char charMessage[35] = "800100-06040005-0166026603660666"; 
 char charMessage1[35] = "800100-06040005-0066046605660666"; 
@@ -27,7 +27,6 @@ void setup(void){
 	radio.setRetries( 15, 15);
 	//	radio.setChannel(0x4c);
 	//	radio.setPALevel(RF24_PA_MAX);
-	//	radio.setPALevel(RF24_PA_MAX);
 
 	radio.printDetails();
 	radio.openWritingPipe(pipes[0]);
@@ -37,9 +36,7 @@ void setup(void){
 }
 
 bool sendMessage(char message[]){
-	//This function send a message, the 'action', to the arduino and wait for answer
-	//Returns true if ACK package is received
-	//Stop listening
+
 	radio.stopListening();
 	printf("Now sending  %d...", message);
 
@@ -82,8 +79,6 @@ int main( int argc, char ** argv){
 	int counter = 0;
 
 	//Define the options
-
-	
 
 		printf("\n Talking with my NRF24l01+ friends out there....\n");
 
