@@ -46,8 +46,7 @@ function sendMessage(socket, data){
 				var state = stdout.split('Got this response ')[1].split('.')[0];
 				socket.emit('updateNode', state);
 				checkSum(state);
-			}
-			if (!error) {
+			} else if (!error) {
 				if(ack == 0){
 					console.log('error Anten');
 					socket.emit('updateNode', 81);
@@ -57,7 +56,7 @@ function sendMessage(socket, data){
 				}
 				
 			} else {
-				console.log('error exec:' + error);
+				console.log(error);
 			}
 		});
 }
