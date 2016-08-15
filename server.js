@@ -80,7 +80,7 @@ function f() {
 		console.log("obj." + prop + " = " + obj[prop]);
 		header+= obj[prop].nodeIp + "00";
 		data +=  obj[prop].crtData;
-		while((16 - obj[prop].crtData.length) >0){
+		while((16 - data.length) >0){
 			data += "0";
 		}
 		console.log(data);
