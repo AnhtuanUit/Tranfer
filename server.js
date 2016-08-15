@@ -47,7 +47,7 @@ function sendMessage(socket, data){
 				socket.emit('updateNode', state);
 				checkSum(state);
 				console.log("-------------////--------------");
-			} else if (!error) {
+			} else if (error !== null) {
 				if(ack == 0){
 					console.log('error Anten');
 					socket.emit('updateNode', 81);
@@ -56,9 +56,7 @@ function sendMessage(socket, data){
 					socket.emit('updateNode', nodeIp);
 				}
 				
-			} else {
-				console.log(error);
-			}
+			} 
 		});
 }
 
