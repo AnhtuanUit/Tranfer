@@ -79,7 +79,7 @@ function f() {
 	for (var prop in obj) {
 		//console.log("obj." + prop + " = " + obj[prop]);
 		header+= obj[prop].nodeIp + "00";
-		detailData+= obj[prop].nVan + activityType + "00" + controlArray[i].estimatedTime.toString();
+		detailData+= obj[prop].nVan + "04" + "00" + controlArray[i].estimatedTime.toString();
 		var data = "-" + obj[prop].crtData;
 		while((16 - data.length) >= 0){
 			data += "0";
