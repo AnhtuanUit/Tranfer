@@ -70,22 +70,19 @@ socket.on('chat', function (zzz) {
 
 
 function f() {
-	var header = "80";
-	var detailData = "-";
-	
 
 	var obj = controlArray[i].node;
 
 	for (var prop in obj) {
-		//console.log("obj." + prop + " = " + obj[prop]);
-		header+= obj[prop].nodeIp + "00";
-		detailData+= obj[prop].nVan + "04" + "00" + controlArray[i].estimatedTime.toString();
+		
+		var header = "80" + obj[prop].nodeIp + "00";
+		var detailData = "-" + obj[prop].nVan + "04" + "00" + controlArray[i].estimatedTime.toString();
 		var data = "-" + obj[prop].crtData;
 		while((16 - data.length) >= 0){
 			data += "0";
 		}
-		console.log(data);
 		message = header + detailData + data;
+		console.log(message);
 		sendMessage(socket, message);
 	}
 
