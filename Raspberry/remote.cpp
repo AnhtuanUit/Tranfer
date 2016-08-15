@@ -97,3 +97,11 @@ int main( int argc, char ** argv){
 		}
 	
 }
+
+void checkSum(){
+	char buff[5] = "this is a test string";
+	char subbuff[5];
+	memcpy( subbuff, &buff[10], 4 );
+	subbuff[4] = '\0';
+	printf(subbuff);
+}
