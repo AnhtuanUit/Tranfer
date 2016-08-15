@@ -52,7 +52,7 @@ function sendMessage(socket, data){
 					console.log('error Anten');
 					socket.emit('updateNode', 81);
 				} else {
-					console.log('error nodeIp: ' nodeIp);
+					console.log('error nodeIp: '+ nodeIp);
 					socket.emit('updateNode', nodeIp);
 				}
 				
