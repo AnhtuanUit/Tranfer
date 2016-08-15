@@ -67,8 +67,8 @@ function sendMessage(socket, data){
 function checkSum(socket, state, nodeIpChar, crtData) {
 	var startIp = parseInt(state.substring(0, 2));
 	var endIp = parseInt(state.substring(2, 4));
-	var ackChar = state.substring(4, 6);
 	var ack = parseInt(state.substring(4, 6));
+	var ackChar;
 	var header = "80";
 	if(startIp == 81 && endIp == 80){
 		if(ack == 0){
@@ -77,13 +77,14 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 		if(ack > 0 && ack < 10){
 			console.log("Hands shake 1 from anten");
 			ackTuoi = ack + 1;
-
+			ackChar = ackTuoi > 9 ? ackTuoi.toString() : "0" + ackTuoi.toString();
 			header += nodeIpChar + ackChar;
 			sendMessage(socket, header + "-" + crtData);
 		}
 		if(ack > 50 && ack < 60){
 			console.log("Hands shake 51 from anten");
 			ackDoAm = ack + 1;
+			ackChar = ackTuoi > 9 ? ackTuoi.toString() : "0" + ackTuoi.toString();
 			header += nodeIpChar + ackChar;
 			sendMessage(socket, header +  "-" + crtData);
 		}
