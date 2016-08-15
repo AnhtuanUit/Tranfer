@@ -75,12 +75,12 @@ function checkSum(state, socket, crtData) {
 		if(ack > 0 && ack < 10){
 			console.log("Hands shake 1 from anten");
 			ackTuoi = ack + 1;
-			sendMessage(socket, state + crtData);
+			sendMessage(socket, state + "-" + crtData);
 		}
 		if(ack > 50 && ack < 60){
 			console.log("Hands shake 51 from anten");
 			ackDoAm = ack + 1;
-			sendMessage(socket, state + crtData);
+			sendMessage(socket, state +  "-" + crtData);
 		}
 	} 
 
