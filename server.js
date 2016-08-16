@@ -39,12 +39,7 @@ var testDataSocket =
 		node: [
 		{
 			nodeIp: "01",
-			crtData: "0500",
-			nVan: "06"
-		},
-		{
-			nodeIp: "01",
-			crtData: "0600",
+			crtData: "05000600",
 			nVan: "06"
 		}
 		] 
