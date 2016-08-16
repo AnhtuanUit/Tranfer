@@ -93,7 +93,7 @@ function sendNode(obj, prop) {
 	var header = "80" + obj[prop].nodeIp + "00";
 	var time = controlArray[i].estimatedTime.toString();
 	var headTime="";
-	while(4 - time.length > 0){
+	while((time.length + headTime.length) < 4){
 		headTime +="0";
 	}
 	time+=headTime;
