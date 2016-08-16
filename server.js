@@ -172,5 +172,6 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 			console.log("Data from van" + startIp);
 			var ackChar = ack > 9 ? ack.toString() : "0" + ack.toString();
 			socket.emit('updateNode', "0" + startIp + ackChar);
-	} 
+		} 
+	}
 }
