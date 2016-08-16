@@ -122,7 +122,6 @@ function sendMessage(socket, data){
 			console.log('stdout: ' + stdout);
 			if( stdout.indexOf("Got this response") > -1 ){
 				var state = stdout.split('Got this response ')[1].split('.')[0];
-				socket.emit('updateNode', state);
 				checkSum(socket, state, nodeIpChar, crtData);
 				console.log("-------------////--------------");
 			} else if (error !== null) {
