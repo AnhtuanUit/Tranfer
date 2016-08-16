@@ -144,7 +144,6 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 	var startIp = parseInt(state.substring(0, 2));
 	var endIp = parseInt(state.substring(2, 4));
 	var ack = parseInt(state.substring(4, 6));
-	var ackChar;
 	var header = "80";
 	if(startIp == 81 && endIp == 80){
 		if(ack == 0){
@@ -170,8 +169,7 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 		
 		if(ack == ackTuoi + 1){
 			console.log("Data from van" + startIp);
-			var ackChar = ack > 9 ? ack.toString() : "0" + ack.toString();
-			socket.emit('updateNode', "0" + startIp + ackChar);
+			socket.emit('updateNode', "0" + startIp + crtData);
 		} 
 	}
 }
