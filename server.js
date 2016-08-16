@@ -166,8 +166,7 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 
 	if((startIp > 0 && startIp < 80) && endIp == 80){
 			console.log("Data from van" + startIp);
-			var dataVan = "0" + startIp + crtData;
-			console.log("dataVan", dataVan);
+			var dataVan = "0" + startIp + state.substring(7);
 			socket.emit('updateNode', dataVan);
 	}
 }
