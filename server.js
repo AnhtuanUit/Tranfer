@@ -96,7 +96,7 @@ function sendNode(obj, prop) {
 	while((time.length + headTime.length) < 4){
 		headTime +="0";
 	}
-	time = headTime + time;
+	time = headTime + setTimeout;
 	var detailData = "-" + obj[prop].nVan + "04" + time;
 	var data = "-" + obj[prop].crtData;
 	while((16 - data.length) >= 0){
@@ -167,13 +167,8 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 	} 
 
 	if((startIp > 0 && startIp < 80) && endIp == 80){
-		
-		if(ack == ackTuoi + 1){
 			console.log("Data from van" + startIp);
 			var ackChar = ack > 9 ? ack.toString() : "0" + ack.toString();
 			socket.emit('updateNode', "0" + startIp + ackChar);
-		} else {
-			console.log("Van: who you are?");
-		}
 	} 
 }
