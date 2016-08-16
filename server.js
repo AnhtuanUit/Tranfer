@@ -96,7 +96,7 @@ function sendNode(obj, prop) {
 	while((time.length + headTime.length) < 4){
 		headTime +="0";
 	}
-	time+=headTime;
+	time = headTime + time;
 	var detailData = "-" + obj[prop].nVan + "04" + time;
 	var data = "-" + obj[prop].crtData;
 	while((16 - data.length) >= 0){
