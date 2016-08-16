@@ -91,7 +91,13 @@ function f() {
 
 function sendNode(obj, prop) {
 	var header = "80" + obj[prop].nodeIp + "00";
-	var detailData = "-" + obj[prop].nVan + "04" + "00" + controlArray[i].estimatedTime.toString();
+	var time = controlArray[i].estimatedTime.toString();
+	var headTime="";
+	while(4 - time.length > 0){
+		headTime +="0";
+	}
+	time+=headTime;
+	var detailData = "-" + obj[prop].nVan + "04" + time;
 	var data = "-" + obj[prop].crtData;
 	while((16 - data.length) >= 0){
 		data += "0";
