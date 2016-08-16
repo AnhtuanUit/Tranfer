@@ -53,8 +53,9 @@ var activityType;
 var controlArray;
 
 var i, howManyTimes, time;
-socket.on('chat', function (zzz) {
-	var data = testDataSocket;
+socket.on('chat', function (data) {
+	//var data = testDataSocket;
+	console.log(data);
 	activityType = data.activityType;
 	controlArray = data.control;
 	howManyTimes = controlArray.length;
