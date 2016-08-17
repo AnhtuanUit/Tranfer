@@ -83,6 +83,16 @@ function f() {
 		]);
 	
 	time = controlArray[i].estimatedTime;
+
+	var timePump = controlArray[i].estimatedTime.toString();
+	var headTime="";
+	
+	while((time.length + headTime.length) < 4){
+		headTime +="0";
+	}
+	timePump = headTime + timePump;
+	var msgPump = "809001-0101" + timePump +"-0000000000000000";
+	sendMessage(socket, msgPump);
 	i++;
 	if( i < howManyTimes){
 		setTimeout( f, time * 1000 );
@@ -131,8 +141,7 @@ function sendMessage(socket, data){
 				} else {
 					console.log('error nodeIp: '+ nodeIp);
 					socket.emit('updateNode', nodeIp);
-				}
-				
+				}				
 			} 
 		});
 }
@@ -167,6 +176,12 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 	if((startIp > 0 && startIp < 80) && endIp == 80){
 			console.log("Data from van" + startIp);
 			var dataVan = "0" + startIp + state.substring(7);
+			socket.emit('updateNode', dataVan);
+	}
+
+	if((startIp >= 90 && startIp < 100) && endIp == 80){
+			console.log("Data from pump" + startIp);
+			var dataVan =+ startIp;
 			socket.emit('updateNode', dataVan);
 	}
 }
