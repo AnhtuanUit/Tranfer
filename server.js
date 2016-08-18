@@ -4,7 +4,7 @@ async = require('async');
 //socket client.js
 var io = require('socket.io-client');
 var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NzllOWJhMzcxNzgxMWUwMjA3NTI1OGIiLCJ1c2VybmFtZSI6InR1YW4iLCJhdmF0YXIiOiJmZW1hbGUucG5nIiwiaWF0IjoxNDcwMDEzMDU0fQ.wb5Vv6pJc9HVF_YKkZLYHi0zT3EebAMIQz0apobDQq0';
-var socket = io.connect('http://192.168.1.19:3000?token=' + token, {reconnect: true});
+var socket = io.connect('http://192.168.1.4:3000?token=' + token, {reconnect: true});
 
 var ackTuoi = -2, ackDoAm = -2;
 
