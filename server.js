@@ -137,10 +137,10 @@ function sendMessage(socket, data){
 			} else if (error !== null) {
 				if(ack == 0){
 					console.log('error Anten');
-					socket.emit('updateNode', 81);
+					socket.emit('updateNode', "81");
 				} else {
-					console.log('error nodeIp: '+ nodeIp);
-					socket.emit('updateNode', nodeIp);
+					console.log('error nodeIp: '+ nodeIpChar);
+					socket.emit('updateNode', nodeIpChar);
 				}				
 			} 
 		});
