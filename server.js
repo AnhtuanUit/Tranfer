@@ -84,15 +84,7 @@ function f() {
 	
 	time = controlArray[i].estimatedTime;
 
-	var timePump = controlArray[i].estimatedTime.toString();
-	var headTime="";
 	
-	while((time.length + headTime.length) < 4){
-		headTime +="0";
-	}
-	timePump = headTime + timePump;
-	var msgPump = "809001-0101" + timePump +"-0000000000000000";
-	sendMessage(socket, msgPump);
 	i++;
 	if( i < howManyTimes){
 		setTimeout( f, time * 1000 );
@@ -185,3 +177,15 @@ function checkSum(socket, state, nodeIpChar, crtData) {
 			socket.emit('updateNode', dataVan);
 	}
 }
+
+/*
+var timePump = controlArray[i].estimatedTime.toString();
+	var headTime="";
+	
+	while((time.length + headTime.length) < 4){
+		headTime +="0";
+	}
+	timePump = headTime + timePump;
+	var msgPump = "809001-0101" + timePump +"-0000000000000000";
+	sendMessage(socket, msgPump);
+	*/
