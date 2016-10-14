@@ -20,14 +20,16 @@ function sendMessage(socket, data){
 			console.log('stdout: ' + stdout);
 			if( stdout.indexOf("Got this response") > -1 ){
 				var state = stdout.split('Got this response ')[1].split('.')[0];
-				socket.emit('device', 1);
+				//socket.emit('device', 1);
+				console.log("success");
 				console.log("-------------////--------------");
 			} else if (error !== null) {
-				socket.emit('device', 0);
+				console.log("fail");
+				//socket.emit('device', 0);
 			} 
 		});
 }
 
 
 //just some output to know everything is working
-console.log("Run client!!!");
+console.log("Run client!!!");\
